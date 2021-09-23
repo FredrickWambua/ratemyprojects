@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'awards.apps.AwardsConfig',
-    'users.apps.UsersConfig',
     'bootstrap4',
     'django_registration',
     'cloudinary',
@@ -102,7 +101,7 @@ if PRODUCTION == 'True':
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'awwwards',
+        'NAME': 'award_db',
         'USER': 'moringa',
         'PASSWORD': '12345',
     }
