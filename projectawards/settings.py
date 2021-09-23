@@ -46,12 +46,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'theawardsapp.apps.Theawardsapp.Config',
+    'awards.apps.AwardsConfig',
+    'users'
     'bootstrap4',
-    'registration',
+    'django_registration',
     'cloudinary',
     'crispy_forms',
-    'cripsy_bootstrap5',
+    'crispy_bootstrap5',
 
 
 ]
@@ -147,6 +148,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT=BASE_DIR/'static'
+
+
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
