@@ -103,6 +103,11 @@ class Rates(models.Model):
     project = models.ForeignKey(Project, on_delete=CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = 'Rate'
+        verbose_name_plural = 'Rates'
+
+
     def save_rate(self):
         self.save()
 
