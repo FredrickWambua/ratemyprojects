@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'awards.apps.AwardsConfig',
-    'users'
+    'users',
     'bootstrap4',
     'django_registration',
     'cloudinary',
@@ -167,3 +167,4 @@ cloudinary.config(
 
 )
 
+AUTH_USER_MODEL = 'users.CustomUser'
