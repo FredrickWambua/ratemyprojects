@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.db import models
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
+from .models import CustomUser, Profile, Project, Rates
 
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
@@ -24,4 +24,7 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('email',)
     ordering = ('email',)
 
-admin.site.register(CustomUser,CustomUserAdmin )
+admin.site.register(CustomUser,CustomUserAdmin,)
+admin.site.register(Profile)
+admin.site.register(Project)
+admin.site.register(Rates)
