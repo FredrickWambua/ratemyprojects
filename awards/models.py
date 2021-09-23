@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
+from django.db.models.deletion import CASCADE
+from django.db.models.fields.related import OneToOneField
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.db import models
@@ -46,6 +48,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(max_length=255)
     email = models.EmailField(_('email address'), unique=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -67,3 +70,45 @@ class Profile(models.Model):
 
     def __str__(self) -> str:
         return f'{self.user.username} Profile'
+
+    def save_profile(self):
+        self.user
+
+    def delete_profile(self):
+        self.delete()
+
+class Project(models.Model):
+    title = models.CharField(max_length=70)
+    description = models.TextField(max_length=255)
+    image = CloudinaryField('image')
+    link = models.CharField(max_length=255)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+    def save_project(self):
+        self.save()
+
+    def delete_project(self):
+        self.delete()
+
+    def __str__(self) -> str:
+        return f'{self.user.username} {self.title} Project '
+
+
+
+
+class Rates(models.Model):
+    content = models.IntegerField(choices=[(i,i) for i in range(1,6)])
+    design = models.IntegerField(choices=[(i,i) for i in range(1,6)])
+    usability = models.IntegerField(choices=[(i,i) for i in range(1,6)])
+    project = models.ForeignKey(Project, on_delete=CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+    def save_rate(self):
+        self.save()
+
+    def delete_rate(self):
+        self.delete()
+
+
+    def __str__(self) -> str:
+        return f' {self.user.username} {self.project.title} Rating ' 

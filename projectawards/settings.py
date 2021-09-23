@@ -101,7 +101,7 @@ if PRODUCTION == 'True':
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'award_db',
+        'NAME': 'theawards',
         'USER': 'moringa',
         'PASSWORD': '12345',
     }
