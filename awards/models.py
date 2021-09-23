@@ -1,14 +1,19 @@
-from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
-from django.contrib.auth import get_user_model
+from django.db import models
+from cloudinary.models import CloudinaryField
+
+
+
+
 
 
 
 
 # Create your models here.
+
 class CustomUserManager(BaseUserManager):
     '''
     Custom user manager where email is the unique identifiers
@@ -54,3 +59,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+class Profile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    profile_photo = CloudinaryField('image')
+    bio = models.TextField(max_length=255)
+
+    def __str__(self) -> str:
+        return f'{self.user.username} Profile'
