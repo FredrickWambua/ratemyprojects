@@ -46,6 +46,13 @@ def profileDetail(request, pk):
     return Response(serializers.data)
 
 
+@api_view(['POST'])
+def profileCreate(request):
+    serializers = ProfileSerializer(data=request.data)
+    if serializers.is_valid():
+        serializers.save()
+    return Response(serializers.data)
+
 @api_view(['GET'])
 def projectList(self, request):
     projects = Project.objects.all()
