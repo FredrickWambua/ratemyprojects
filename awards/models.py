@@ -64,6 +64,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 class Profile(models.Model):
+    name = models.CharField(max_length=70, null=True)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     profile_photo = CloudinaryField('image')
     bio = models.TextField(max_length=255)
