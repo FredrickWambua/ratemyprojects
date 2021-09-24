@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'awards.apps.AwardsConfig',
+    'rest-framework',
     'bootstrap4',
     'django_registration',
     'cloudinary',
