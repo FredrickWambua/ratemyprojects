@@ -41,10 +41,9 @@ def profileList(request):
 
 @api_view(['GET'])
 def profileDetail(request, pk):
-    profiles = Profile.objects.get(id=pk)
-    serializers = ProfileSerializer(profiles, many=False)
+    profile = Profile.objects.get(id=pk)
+    serializers = ProfileSerializer(profile, many=False)
     return Response(serializers.data)
-
 
 @api_view(['POST'])
 def profileCreate(request):
@@ -52,6 +51,20 @@ def profileCreate(request):
     if serializers.is_valid():
         serializers.save()
     return Response(serializers.data)
+    
+@api_view(['POST'])
+def profileUpdate(request, pk):
+    profile = Profile.objects.get(id=pk)
+    serializers = ProfileSerializer(instance=profile, data=request.data)
+    if serializers.is_valid():
+        serializers.save()
+    return Response(serializers.data)
+
+@api_view(['DELETE'])
+def profileDelete(request, pk):
+    profile = Profile.objects.get(id=pk)
+    profile.delete()
+    return Response('Profile deleted successfully')
 
 @api_view(['GET'])
 def projectList(self, request):
