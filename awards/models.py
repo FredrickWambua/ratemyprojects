@@ -83,7 +83,7 @@ class Project(models.Model):
     description = models.TextField(max_length=255)
     image = CloudinaryField('image')
     link = models.CharField(max_length=255)
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def save_project(self):
@@ -103,7 +103,7 @@ class Rates(models.Model):
     design = models.IntegerField(choices=[(i,i) for i in range(1,6)])
     usability = models.IntegerField(choices=[(i,i) for i in range(1,6)])
     project = models.ForeignKey(Project, on_delete=CASCADE)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,)
 
     class Meta:
         verbose_name = 'Rate'
