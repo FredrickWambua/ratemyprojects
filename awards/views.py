@@ -32,7 +32,7 @@ def signup(request):
 def home(request):
     return render(request, 'award/index.html')
 
-
+# Profile related methods and views
 @api_view(['GET'])
 def profileList(request):
     profiles = Profile.objects.all()
@@ -66,9 +66,39 @@ def profileDelete(request, pk):
     profile.delete()
     return Response('Profile deleted successfully')
 
+# Project related views and methods
 @api_view(['GET'])
 def projectList(self, request):
     projects = Project.objects.all()
     serializers = ProjectSerializer(projects, many=True)
     return Response(serializers.data)
+
+@api_view(['GET'])
+def projectDetail(request, pk):
+    project = Project.objects.get(id=pk)
+    serializers = ProjectSerializer(project, many=False)
+    return Response(serializers.data)
+
+@api_view(['POST'])
+def projectCreate(request):
+    serializers = ProjectSerializer(data=request.data)
+    if serializers.is_valid():
+        serializers.save()
+    return Response(serializers.data)
+    
+@api_view(['POST'])
+def projectUpdate(request, pk):
+    project = Project.objects.get(id=pk)
+    serializers = ProfileSerializer(instance=project, data=request.data)
+    if serializers.is_valid():
+        serializers.save()
+    return Response(serializers.data)
+
+@api_view(['DELETE'])
+def projectDelete(request, pk):
+    project = Project.objects.get(id=pk)
+    project.delete()
+    return Response('Project deleted successfully')
+
+
 
