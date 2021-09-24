@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 from django.db.models.deletion import CASCADE
-from django.db.models.fields.related import OneToOneField
+from django.db.models.fields.related import ForeignKey, OneToOneField
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.db import models
@@ -83,6 +83,7 @@ class Project(models.Model):
     description = models.TextField(max_length=255)
     image = CloudinaryField('image')
     link = models.CharField(max_length=255)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def save_project(self):
