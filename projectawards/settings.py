@@ -109,7 +109,7 @@ if PRODUCTION == 'True':
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'theawards',
+        'NAME': 'fredawards',
         'USER': 'moringa',
         'PASSWORD': '12345',
     }
