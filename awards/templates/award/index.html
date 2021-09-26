@@ -1,10 +1,30 @@
 {% extends 'award/base.html' %}
-{% load static %}
 {% block content %}
 <br>
 <br>
 <br>
-
-<h1>This is the index page</h1>
+<br>
+<div class="container mt-5">
+    <div class="row">
+        {% if projects %}
+            {% for project in projects %}
+            <div class="col-md-4 mt-3">
+                <div class="card">
+                    <img class="project-img" src="{{project.image.url}} " style="height: 150px;" alt="project image">
+                    <p class="project-title mt-3 pl-3"><strong>{{project.title}}</strong></p>
+                    <div class="project-details">
+                        <p class="location pl-3"><span>From {{user.profile.location}}</span><span style="padding-left: 80px;"> {{project.posted_on|date}}</span></p>
+                    </div>
+                    <div class="card-body">
+                        <div class="project-author">
+                            <p><span><img class="img-thumbail" src="{{project.user.profile.profile_photo.url}} " style="border-radius: 50%; height: 30px; width: 30px;" alt="profile photo"></span>BY {{project.user.username|upper}}<strong></strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}

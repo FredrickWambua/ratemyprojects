@@ -1,0 +1,45 @@
+{% extends 'award/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+
+<div class="container mt-5">
+    <div class="media">
+        <img class="img-thumbnail" src=" {{current_user.profile.profile_photo.url}} " alt="profile photo">
+        <div class="media-body">
+            <h3>Username: {{user.username}} </h3>
+            <p>Email: {{user.email}} </p>
+            <p>Bio: {{user.profile.bio}} </p>
+        </div>
+        <a href="{% url 'profile' %} " class="btn btn-outline-info">Edit Profile</a>
+    </div>
+    <hr>
+    <h3>My Projects</h3>
+    <div class="row">
+        {% if projects %}
+            {% for project in projects %}
+            <div class="col-md-4">
+                <div class="card">
+                    <p class="card-title"> {{project.title}} </p>
+                    <img src="{{project.image.url}} " alt="project image">
+                    <div class="card-body">
+                        <div class="description">
+                            <p>{{project.description}} </p>
+                        </div>
+                        <div class="project-author">
+                            <img class="img-thumbail" src="{{project.user.profile.profile_photo.url}} " alt="profile photo">
+                            <p> {{project.user.username}} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>You do not have projects yet</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

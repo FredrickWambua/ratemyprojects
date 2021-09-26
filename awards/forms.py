@@ -10,14 +10,14 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ('email',)
+        fields = ('username', 'email',)
 
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = CustomUser
-        fields = ('email',)
+        fields = ('username', 'email',)
 
 class SignUpForm(UserCreationForm):
     username = forms.CharField(max_length=30, required=False)
@@ -33,15 +33,16 @@ class SignUpForm(UserCreationForm):
             user.save()
         return user
 
+
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['profile_photo', 'bio']
+        fields = ['profile_photo', 'location', 'bio']
 
 class ProjectUploadForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['title', 'image', 'link']
+        fields = ['title', 'image','description', 'link']
 
 class RatesUploadForm(forms.ModelForm):
     class Meta:

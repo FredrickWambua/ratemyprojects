@@ -66,6 +66,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class Profile(models.Model):
     name = models.CharField(max_length=70, null=True)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    location = models.CharField(max_length=55,null=True)
     profile_photo = CloudinaryField('image')
     bio = models.TextField(max_length=255)
 
@@ -83,6 +84,7 @@ class Project(models.Model):
     description = models.TextField(max_length=255)
     image = CloudinaryField('image')
     link = models.CharField(max_length=255)
+    posted_on = models.DateTimeField(auto_now_add=True, null=True)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 

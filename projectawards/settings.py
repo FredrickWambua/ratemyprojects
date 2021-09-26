@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'awards.apps.AwardsConfig',
     'rest_framework',
+    'rest_framework.authtoken',
     'bootstrap4',
     'django_registration',
     'cloudinary',
@@ -56,6 +57,12 @@ INSTALLED_APPS = [
 
 
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
@@ -168,3 +175,7 @@ cloudinary.config(
 )
 
 AUTH_USER_MODEL = 'awards.CustomUser'
+
+LOGOUT_REDIRECT_URL='login'
+LOGIN_REDIRECT_URL='home'
+LOGIN_URL='login'
