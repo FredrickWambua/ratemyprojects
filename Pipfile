@@ -15,6 +15,7 @@ dj-database-url = "*"
 whitenoise = "*"
 djangorestframework = "*"
 pillow = "*"
+pyjwt = "*"
 
 [dev-packages]
 
