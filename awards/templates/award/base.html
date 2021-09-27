@@ -22,7 +22,13 @@
 <body>
     {% include 'award/navbar.html' %}
 
-
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
 
     {% block content %}
 

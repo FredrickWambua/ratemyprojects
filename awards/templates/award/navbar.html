@@ -9,37 +9,43 @@
 <body>
         
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <div class="container">       
-            <div class="container-fluid">
+        <svg viewBox="0 0 100 80" width="40" height="20">
+            <rect width="80" height="5"></rect>
+            <rect y="30" width="80" height="5"></rect>
+            <rect y="60" width="80" height="5"></rect>
+          </svg>
               <a class="navbar-brand" href="{% url 'home' %}">MENU</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent ">
-                <ul class="navbar-nav mr-auto">
-                  <li class="nav-item">
-                    <a class="nav-link" href=" {% url 'home' %} "><img src="https://img2.pngio.com/brand-new-new-logo-and-identity-for-awwwards-by-lesap-and-in-house-awwwards-png-2000_465.png" height="30" width="100px" alt=""></i></a>
-                  </li>                 
-                  {% if user.is_authenticated %}
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <p> {{user.username|upper}}<img style="width: 30px; height: 30px; border-radius: 50%;" src="{{user.profile.profile_photo.url}}" alt="Profile">                        </p>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="{% url 'myprofile' %} ">Profile</a>
-                      <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-                  {% else %}
-                      <a class="dropdown-item" href="{% url 'signup' %} ">REGISTER</a>/<a class="dropdown-item" href="{% url 'login' %} ">LOGIN</a>
-                  {% endif %}
-                    </div>
-                  </li>
-                  <li style=" background-color: teal;">
+              <div class="collapse navbar-collapse" id="navbarSupportedContent"  >
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item" style="padding-left: 500px;">
+                          <a class="nav-link" href=" {% url 'home' %} "><img src="https://img2.pngio.com/brand-new-new-logo-and-identity-for-awwwards-by-lesap-and-in-house-awwwards-png-2000_465.png" height="30" width="100px" alt=""></i></a>
+                        </li> 
+                         <div class="auth" >             
+                        <div class="prof">
+                            {% if user.is_authenticated %}
+                            <li class="nav-item dropdown" >
+                              <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <p> {{user.username|upper}}<img style="width: 30px; height: 30px; border-radius: 50%;" src="{{user.profile.profile_photo.url}}" alt="Profile"></p>
+                              </a>
+                              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'myprofile' %} ">Profile</a>
+                                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                            {% else %}
+                                <a class="dropdown-item" href="{% url 'signup' %}">REGISTER</a>/<a class="dropdown-item" href="{% url 'login' %}">LOGIN</a>
+                            {% endif %}
+                              </div>
+                            </li>
+                        </div>
+                    </div>   
+                </div>
+                  <li style=" background-color: teal; ">
                     <a class="nav-link" href=" {% url 'project-upload' %}" style="color: white;">SUBMIT YOUR SITE</a>
                   </li>
                 </ul>
               </div>
-            </div>
-        </div>
     </nav>
 </body>
 </html>
