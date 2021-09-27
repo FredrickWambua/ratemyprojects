@@ -7,13 +7,14 @@ from django.contrib.auth import authenticate, login, logout
 from .models import *
 from django.shortcuts import get_object_or_404, render,redirect, resolve_url
 from django.http import HttpResponse
-from .serializers import ProfileSerializer, ProjectSerializer
+from .serializers import ProfileSerializer, ProjectSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from .signals import *
+from rest_framework.views import APIView
 
 
 
@@ -69,8 +70,6 @@ def profile(request):
 @login_required
 def UserProfile(request):
     current_user = request.user
-
-
     return render(request, 'award/profile_details.html', {'current_user': current_user})
 
 
@@ -89,6 +88,21 @@ def UploadProject(request):
         return render(request, 'award/upload_project.html', {'form':form})
 
 # Profile related methods and views
+
+class RegisterView(APIView):
+    serializer_class = UserSerializer
+
+    def post(self, request):
+        serializer=UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
 @api_view(['GET'])
 def profileList(request):
     profiles = Profile.objects.all()
