@@ -8,7 +8,7 @@ from django.contrib import auth
 from .models import *
 from django.shortcuts import get_object_or_404, render,redirect, resolve_url
 from django.http import HttpResponse, request
-from .serializers import ProfileSerializer, ProjectSerializer, UserSerializer
+from .serializers import ProfileSerializer, ProjectSerializer, UserSerializer, LoginSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -19,6 +19,8 @@ from rest_framework.views import APIView
 from django.conf import settings
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import permissions
+from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -104,7 +106,8 @@ class RegisterView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class LogiiinView(APIView):
+class LoginView(APIView):
+    serializer_class =LoginSerializer
     def post(self, request):
         data = request.data
         username = data.get('username', '')
@@ -120,15 +123,6 @@ class LogiiinView(APIView):
 
         return Response({'detail': 'Invalid credentials'},status=status.HTTP_401_UNAUTHORIZED)
 
-
-
-
-
-
-# class ProfileList(ListCreateAPIView):
-#     profiles = Profile.objects.all()
-#     serializers = ProfileSerializer(profiles, many=True)
-#     return Response(serializers.data)
 
 class ProjectList(ListCreateAPIView):
     serializer_class = ProjectSerializer
@@ -147,67 +141,16 @@ class ProjectDetailView(RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return Project.objects.filter(user=self.request.user)
 
-
-@api_view(['GET'])
-def profileDetail(request, pk):
-    profile = Profile.objects.get(id=pk)
-    serializers = ProfileSerializer(profile, many=False)
-    return Response(serializers.data)
-
-@api_view(['POST'])
-def profileCreate(request):
-    serializers = ProfileSerializer(data=request.data)
-    if serializers.is_valid():
-        serializers.save()
-    return Response(serializers.data)
-    
-@api_view(['PUT'])
-def profileUpdate(request, pk):
-    profile = Profile.objects.get(id=pk)
-    serializers = ProfileSerializer(instance=profile, data=request.data)
-    if serializers.is_valid():
-        serializers.save()
-    return Response(serializers.data)
-
-@api_view(['DELETE'])
-def profileDelete(request, pk):
-    profile = Profile.objects.get(id=pk)
-    profile.delete()
-    return Response('Profile deleted successfully')
-
-# Project related views and methods
-@api_view(['GET'])
-def projectList(request):
-    projects = Project.objects.all()
-    serializers = ProjectSerializer(projects, many=True)
-    return Response(serializers.data)
-
-@api_view(['GET'])
-def projectDetail(request, pk):
-    project = Project.objects.get(id=pk)
-    serializers = ProjectSerializer(project, many=False)
-    return Response(serializers.data)
-
-@api_view(['POST'])
-def projectCreate(request):
-    serializers = ProjectSerializer(data=request.data)
-    if serializers.is_valid():
-        serializers.save()
-    return Response(serializers.data)
-    
-@api_view(['PUT'])
-def projectUpdate(request, pk):
-    project = Project.objects.get(id=pk)
-    serializers = ProfileSerializer(instance=project, data=request.data)
-    if serializers.is_valid():
-        serializers.save()
-    return Response(serializers.data)
-
-@api_view(['DELETE'])
-def projectDelete(request, pk):
-    project = Project.objects.get(id=pk)
-    project.delete()
-    return Response('Project deleted successfully')
-
+csrf_exempt
+def search(request):
+    if request.method=='GET':
+        result = request.GET.get('q')
+        if result:
+            display = Project.objects.filter(Q(title__icontains = result)|Q(description__icontains = result))
+            return render(request, 'award/search.html',  {'display': display})
+            
+        else:
+            message = "No information found from your search. Try to refine your search term"
+            return render(request, 'award/search.html',{"message":message})
 
 
