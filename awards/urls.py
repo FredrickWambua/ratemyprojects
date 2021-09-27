@@ -13,9 +13,14 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('signup/', views.signup, name='signup'),
     path('register', views.RegisterView.as_view(), name='register'),
+    path('logiiin', views.LogiiinView.as_view(), name='logiiin'),
+    path('projects', views.ProjectList.as_view(), name = 'projects'),
+    path('project/<int:id>', views.ProjectDetailView.as_view(), name = 'project'),
+
     path('login/', LoginView.as_view(template_name='registrations/login.html'), name='login'),
     path('logout/', LogoutView.as_view(template_name='registrations/logout.html'), name='logout'),
-    path('profile-list/', views.profileList, name='profile-list'),
+
+# might not be used
     path('profile-detail/<str:pk>/', views.profileDetail, name='profile-detail'),
     path('profile-create/', views.profileCreate, name='profile-create'),
     path('profile-update/<str:pk>/', views.profileUpdate, name='profile-update'),
