@@ -60,7 +60,7 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+        'awards.permissions.JWTAuthentication',
     )
 }
 
@@ -147,6 +147,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+# JWT
+JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
 
 
 # Static files (CSS, JavaScript, Images)
