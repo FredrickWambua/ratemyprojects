@@ -1,12 +1,13 @@
 from django import forms
 from django.contrib.auth.forms import UserChangeForm
 from django.shortcuts import render
+import jwt
 from awards.forms import CustomUserChangeForm, SignUpForm, RatesUploadForm, ProfileUpdateForm, ProjectUploadForm, CustomUserCreationForm, UserUpdateForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib import auth
 from .models import *
 from django.shortcuts import get_object_or_404, render,redirect, resolve_url
-from django.http import HttpResponse
+from django.http import HttpResponse, request
 from .serializers import ProfileSerializer, ProjectSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework import status
@@ -15,6 +16,9 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from .signals import *
 from rest_framework.views import APIView
+from django.conf import settings
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework import permissions
 
 
 
@@ -100,14 +104,49 @@ class RegisterView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class LogiiinView(APIView):
+    def post(self, request):
+        data = request.data
+        username = data.get('username', '')
+        password = data.get('password', '')
+        user = auth.authenticate(username=username, password=password)
+
+        if user:
+            auth_token = jwt.encode({'username': user.username},settings.JWT_SECRET_KEY)
+            serializer = UserSerializer(user, many=True)
+            data = {'user':serializer.data,'token': auth_token}
+
+            return Response(data ,status=status.HTTP_200_OK)
+
+        return Response({'detail': 'Invalid credentials'},status=status.HTTP_401_UNAUTHORIZED)
 
 
 
-@api_view(['GET'])
-def profileList(request):
-    profiles = Profile.objects.all()
-    serializers = ProfileSerializer(profiles, many=True)
-    return Response(serializers.data)
+
+
+
+# class ProfileList(ListCreateAPIView):
+#     profiles = Profile.objects.all()
+#     serializers = ProfileSerializer(profiles, many=True)
+#     return Response(serializers.data)
+
+class ProjectList(ListCreateAPIView):
+    serializer_class = ProjectSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        serializer.save(user=request.user)
+    def get_queryset(self):
+        return Project.objects.filter(user=self.request.user)
+
+
+class ProjectDetailView(RetrieveUpdateDestroyAPIView):
+    serializer_class = ProjectSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    lookup_field = 'id'
+    def get_queryset(self):
+        return Project.objects.filter(user=self.request.user)
+
 
 @api_view(['GET'])
 def profileDetail(request, pk):
