@@ -16,6 +16,7 @@ import dj_database_url as db_url
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import django_heroku
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -195,3 +196,6 @@ AUTH_USER_MODEL = 'awards.CustomUser'
 LOGOUT_REDIRECT_URL='login'
 LOGIN_REDIRECT_URL='home'
 LOGIN_URL='login'
+
+django_heroku.settings(locals())
+

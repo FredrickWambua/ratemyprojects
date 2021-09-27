@@ -17,6 +17,8 @@ djangorestframework = "*"
 pillow = "*"
 pyjwt = "*"
 drf-yasg = "*"
+gunicorn = "*"
+django-heroku = "*"
 
 [dev-packages]
 
