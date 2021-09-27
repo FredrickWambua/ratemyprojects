@@ -16,6 +16,7 @@ whitenoise = "*"
 djangorestframework = "*"
 pillow = "*"
 pyjwt = "*"
+drf-yasg = "*"
 
 [dev-packages]
 
