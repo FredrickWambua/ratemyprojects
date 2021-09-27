@@ -13,11 +13,11 @@ class UserSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if CustomUser.objects.filter(email=attrs['email']).exists():
-            raise serializers.ValidationError({'email',('Email is already in use')})
+            raise serializers.ValidationError({'email':('Email is already in use')})
         return super().validate(attrs)
 
     def create(self, validated_data):
-        return CustomUser.objects.filter.create_user(validated_data)
+        return CustomUser.objects.create_user(**validated_data)
 
 
 class ProfileSerializer(serializers.ModelSerializer):
