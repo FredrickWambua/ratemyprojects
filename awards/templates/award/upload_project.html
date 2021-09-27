@@ -15,7 +15,7 @@
             <img class="img-thumbnail"  src="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?ixid=MnwxMjA3fDB8MHxz
             ZWFyY2h8MTR8fHByb2plY3QlMjBwbGFufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
         </div>
-        <p>
+        <p style="margin-top: 30px;">
             Welcome to awwards. Get a chance to showcase your projects and project ideas to 
             the big awwards community and let you be appreciated for your hard work.
         </p>
@@ -23,16 +23,25 @@
     <div class="col-md-1">
  
     </div>
-    <div class="col-md-6">
-    <h1 class="upload-form-heading">Upload Project</h1>
-    <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form|crispy }}
-        
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Upload Image</button>
+    <div class="col-md-6" >
+        <div class="card bg-secondary text-white" >
+            <div class="container" >
+                <div class="card-header" style="text-align: center;">
+                    <h1 class="upload-form-heading">Upload Project</h1>
+                </div>
+                <div class="card-details">
+                    <form action="" method="POST" enctype="multipart/form-data"> 
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type="submit">Submit Project</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+           
         </div>
-    </form>
     </div>
     
     <div class="col-md-3"></div>
