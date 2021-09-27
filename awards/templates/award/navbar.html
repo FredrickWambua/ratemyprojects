@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +19,15 @@
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
+              <div class="collapse navbar-collapse" id="navbarTogglerDemo01" style="padding-left: 10px;">
+                <form class="d-flex my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                  <input class="form-control me-2" type="search" name='q' placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+              </div>
               <div class="collapse navbar-collapse" id="navbarSupportedContent"  >
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item" style="padding-left: 500px;">
+                        <li class="nav-item" style="padding-left: 200px;">
                           <a class="nav-link" href=" {% url 'home' %} "><img src="https://img2.pngio.com/brand-new-new-logo-and-identity-for-awwwards-by-lesap-and-in-house-awwwards-png-2000_465.png" height="30" width="100px" alt=""></i></a>
                         </li> 
                          <div class="auth" >             
