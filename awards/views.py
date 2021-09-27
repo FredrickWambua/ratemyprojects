@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserChangeForm
 from django.shortcuts import render
-from awards.forms import CustomUserChangeForm, SignUpForm, RatesUploadForm, ProfileUpdateForm, ProjectUploadForm, CustomUserCreationForm
+from awards.forms import CustomUserChangeForm, SignUpForm, RatesUploadForm, ProfileUpdateForm, ProjectUploadForm, CustomUserCreationForm, UserUpdateForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import *
@@ -32,7 +32,7 @@ def signup(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Hi {username} Your account was created successfully. ')
-            return redirect('home')
+            return redirect('profile')
     else:
         form = SignUpForm
 
@@ -48,15 +48,15 @@ def home(request):
 def profile(request):
     title = 'Your Profile'
     if request.method == 'POST':
-        user_form = CustomUserCreationForm(request.POST, instance=request.user)
-        profile_form = ProfileUpdateForm(request.POST, instance=request.user.profile)
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, _('Your profile has been updated successfully.'))
-            return redirect('settings:profile')
+            messages.success(request, f'Your profile has been updated successfully.')
+            return redirect('home')
     else:
-        user_form = CustomUserCreationForm(instance=request.user)
+        user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=request.user.profile)
         context = {
             'title': title,
@@ -69,6 +69,7 @@ def profile(request):
 @login_required
 def UserProfile(request):
     current_user = request.user
+
 
     return render(request, 'award/profile_details.html', {'current_user': current_user})
 

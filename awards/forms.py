@@ -19,6 +19,8 @@ class CustomUserChangeForm(UserChangeForm):
         model = CustomUser
         fields = ('username', 'email',)
 
+
+
 class SignUpForm(UserCreationForm):
     username = forms.CharField(max_length=30, required=False)
     email = forms.EmailField(max_length=255, help_text='Required. Inform a valid email address.')
@@ -32,6 +34,12 @@ class SignUpForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
+    class Meta:
+        model  =CustomUser
+        fields = ['username', 'email']
 
 
 class ProfileUpdateForm(forms.ModelForm):
