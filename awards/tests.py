@@ -1,3 +1,4 @@
+from awards.models import CustomUser, Project
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.test import TestCase
@@ -42,3 +43,22 @@ class UsersManagersTests(TestCase):
             with self.assertRaises(ValueError):
                 User.objects.create_superuser(
                     email='wambua@g.com', password='ihateyou123', is_superuser=False)
+
+class ProjectTestClass(TestCase):
+    def setUp(self):
+        self.test_user_project = CustomUser(username='fredricks')
+        self.test_user_project.save()
+        self.project_test = Project(title='UX/UI', description='For user experience and user interface, learn more')
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.project_test, Project))
+
+    def test_save_project(self):
+        self.project_test.save()
+        projects = Project.objects.all()
+        self.assertTrue(len(projects)>0)
+
+    def test_delete_project(self):
+        self.project_test.delete()
+        projects = Project.objects.all()
+        self.assertTrue(len(projects)<1)
