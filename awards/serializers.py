@@ -1,3 +1,4 @@
+from django.db.models import fields
 from rest_framework import serializers
 from .models import CustomUser, Profile, Project, Rates
 
@@ -18,6 +19,13 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return CustomUser.objects.create_user(**validated_data)
+
+class LoginSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(max_length=65, min_length=8, write_only=True)
+    username = serializers.CharField(max_length=65, min_length=2)
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password']
 
 
 class ProfileSerializer(serializers.ModelSerializer):
