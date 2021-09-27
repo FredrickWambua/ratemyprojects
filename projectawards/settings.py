@@ -48,16 +48,27 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'awards.apps.AwardsConfig',
     'rest_framework',
-    'drf-yasg',
+    'drf_yasg',
     'rest_framework.authtoken',
     'bootstrap4',
     'django_registration',
     'cloudinary',
     'crispy_forms',
     'crispy_bootstrap5',
-
-
 ]
+
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINATIONS': {
+        "Auth Token eg [Bearer (JWT) ]":{
+            "type":"apiKey",
+            "name":"Authorization",
+            "in":"header"
+        }
+    } 
+}
+
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
