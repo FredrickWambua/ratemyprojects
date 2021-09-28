@@ -50,6 +50,9 @@ $ make createsuperuser
 ## Known Bugs
 Api authentication is currently not working
 
+## Deployment
+View the working deployed application [here](https://projectrating.herokuapp.com/)
+Follow [heroku documentation](https://devcenter.heroku.com/articles/git) to know more about deploying app to heroku.
 
 ## License
 Copyright 2021 Fredrick Wambua
